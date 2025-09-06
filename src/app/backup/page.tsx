@@ -114,12 +114,12 @@ const content = {
   // 네비게이션: 섹션 ID와 라벨(앵커 내비로 이동)
   navigation: [
     { id: "home", label: "Home" },
-    { id: "brand", label: "Brand" },
+    { id: "brand", label: "브랜드" },
     { id: "wash", label: "세차 시스템" }, // Single Menu 유사 섹션
     { id: "franchise", label: "가맹 안내" },
     { id: "startup", label: "창업 절차" },
     { id: "media", label: "미디어" },
-    { id: "locations", label: "가맹점 현황" },
+    { id: "locations", label: "매장 찾기" },
     { id: "inquiry", label: "창업 문의" },
   ],
 
@@ -222,9 +222,9 @@ const content = {
   // 매장/지점(전화/지도링크)
   locations: {
     stores: [
-      { name: "웰컴워시 송도점", phone: "0507-1313-0853", map_link: "https://naver.me/xq3dSvgy", image: "/stores/송도점.jpg"},
-      { name: "웰컴워시 운남점", phone: "0507-1347-3497", map_link: "https://naver.me/FtGgKl3M", image: "/stores/운남점.jpg"},
-      { name: "싸이칸워시 청학점", phone: "0507-1411-2010", map_link: "https://naver.me/xIeANgBZ", image: "/stores/청학점.jpg"},
+      { name: "서울 강남점 (수정)", phone: "02-000-0000 (수정)", map_link: "#" },
+      { name: "경기 수원점 (수정)", phone: "031-000-0000 (수정)", map_link: "#" },
+      { name: "부산 해운대점 (수정)", phone: "051-000-0000 (수정)", map_link: "#" },
     ],
   },
 
@@ -304,12 +304,8 @@ function Tag({ children }: { children: React.ReactNode }) {
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex h-16 items-center justify-between">
             {/* 좌측 로고/브랜드명 */}
-            <a href="#home" className="flex items-center gap-2">
-              <img
-                src="/logo.png"
-                alt="브랜드 로고"
-                className="h-10 w-auto"
-              />
+            <a href="#home" className="font-semibold tracking-tight flex items-center gap-2">
+              <Building2 className="h-5 w-5" /> 세차 브랜드 로고 (수정)
             </a>
   
             {/* 데스크탑 내비: md 이상에서만 표시 */}
@@ -731,60 +727,33 @@ function MediaBoard() {
    11) 매장 찾기(지점 카드)
    - 전화/지도 링크 노출
    ========================================================= */
-
 function Locations() {
   const { stores } = content.locations;
-
-  // 무한 루프용으로 2회 반복(트랙 길이를 2배로 만들어 자연스러운 순환)
-  const looped = [...stores, ...stores];
-
   return (
     <Section id="locations">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 flex items-center gap-3">
           <MapPin className="h-5 w-5" />
-          <h2 className="text-2xl font-semibold">가맹점 현황</h2>
+          <h2 className="text-2xl font-semibold">매장 찾기</h2>
           <Tag>지점/연락처/지도링크 (수정)</Tag>
         </div>
 
-        {/* 뷰포트: 오버플로우 감춤 */}
-        <div className="relative overflow-hidden">
-          {/* 가로 트랙: 자동 스크롤(왼→오로 흐르게 하려면 x 값을 반대로) */}
-          <motion.div
-            className="flex gap-4 px-1 pb-2"
-            animate={{ x: ["-50%", "0%"] }}        // ← 화면 기준 왼쪽으로 이동(오른쪽에서 왼쪽으로 흐름)
-            // animate={{ x: ["-50%", "0%"] }}     // → 오른쪽으로 흐르게 하려면 이 줄로 교체
-            transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-            style={{ willChange: "transform" }}
-          >
-            {looped.map((s, i) => (
-              <Card
-                key={`${s.name}-${i}`}
-                className="overflow-hidden snap-start min-w-[280px] md:min-w-[360px] lg:min-w-[420px]"
-              >
-                {/* 이미지 클릭 → 지도 링크 이동 */}
-                {s.image ? (
-                  <a href={s.map_link} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} 지도 열기`}>
-                    <img
-                      src={s.image}
-                      alt={s.imageAlt ?? `${s.name} 사진`}
-                      className="w-full aspect-[4/3] object-cover hover:opacity-90 transition"
-                      loading="lazy"
-                      width={1200}
-                      height={900}
-                    />
-                  </a>
-                ) : null}
-
-                <CardHeader>
-                  <CardTitle className="text-base">{s.name}</CardTitle>
-                  <CardDescription className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" /> {s.phone}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </motion.div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {stores.map((s, i) => (
+            <Card key={i}>
+              <CardHeader>
+                <CardTitle className="text-base">{s.name}</CardTitle>
+                <CardDescription className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" /> {s.phone}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center gap-2">
+                <Button variant="outline" size="sm" asChild>
+                  <a href={s.map_link}>네이버/카카오 지도 (수정)</a>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </Section>
