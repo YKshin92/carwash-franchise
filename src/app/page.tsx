@@ -43,6 +43,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
+import { useMotionValue, useTransform, useAnimationFrame, wrap } from "framer-motion";
+import {ChevronLeft, ChevronRight } from "lucide-react";
+
 // ✅ page.tsx 최상단의 import들 다음 줄에 붙여넣기
 function useScrollSpy(ids: string[], headerOffset = 96) {
   const [activeId, setActiveId] = React.useState<string>(ids[0] ?? "");
@@ -735,8 +738,33 @@ function MediaBoard() {
 function Locations() {
   const { stores } = content.locations;
 
-  // 무한 루프용으로 2회 반복(트랙 길이를 2배로 만들어 자연스러운 순환)
+  // 트랙 데이터를 2배로 만들어 무한루프 자연스럽게
   const looped = [...stores, ...stores];
+
+  // 카드 고정 폭/간격(px) — 이미지 비율과 함께 맞춰 주세요
+  const CARD_W = 360;   // md 기준 카드 최소폭과 맞추면 깔끔 (예: min-w-[360px])
+  const GAP    = 16;    // gap-4 = 1rem = 16px
+  const STEP   = CARD_W + GAP;
+
+  // 자동 흐름 속도(px/s): 값이 클수록 더 빠름 (오른쪽으로 흐르게 +방향)
+  const SPEED  = 60;
+
+  // 모션 값과 래핑
+  const x = useMotionValue(0);
+  const trackSpan = stores.length * STEP; // 원본 길이(2배 중 절반만 래핑 기준)
+  const xWrapped = useTransform(x, (v) => `${wrap(-trackSpan, 0, v)}px`);
+
+  // 자동 이동 (마우스 오버 시 일시정지)
+  const [paused, setPaused] = useState(false);
+  useAnimationFrame((_, delta) => {
+    if (paused) return;
+    const dx = (SPEED * delta) / 1000; // delta(ms) → s 변환
+    x.set(x.get() + dx);
+  });
+
+  // 수동 제어: 좌/우 버튼
+  const next = () => x.set(x.get() + STEP);   // 오른쪽으로 한 카드만큼
+  const prev = () => x.set(x.get() - STEP);   // 왼쪽으로 한 카드만큼
 
   return (
     <Section id="locations">
@@ -747,24 +775,28 @@ function Locations() {
           <Tag>지점/연락처/지도링크 (수정)</Tag>
         </div>
 
-        {/* 뷰포트: 오버플로우 감춤 */}
-        <div className="relative overflow-hidden">
-          {/* 가로 트랙: 자동 스크롤(왼→오로 흐르게 하려면 x 값을 반대로) */}
+        <div
+          className="relative overflow-hidden"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {/* 트랙 */}
           <motion.div
             className="flex gap-4 px-1 pb-2"
-            animate={{ x: ["-50%", "0%"] }}        // ← 화면 기준 왼쪽으로 이동(오른쪽에서 왼쪽으로 흐름)
-            // animate={{ x: ["-50%", "0%"] }}     // → 오른쪽으로 흐르게 하려면 이 줄로 교체
-            transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-            style={{ willChange: "transform" }}
+            style={{ x: xWrapped, willChange: "transform" }}
           >
             {looped.map((s, i) => (
               <Card
                 key={`${s.name}-${i}`}
-                className="overflow-hidden snap-start min-w-[280px] md:min-w-[360px] lg:min-w-[420px]"
+                className="overflow-hidden min-w-[280px] md:min-w-[360px] lg:min-w-[420px]"
               >
-                {/* 이미지 클릭 → 지도 링크 이동 */}
                 {s.image ? (
-                  <a href={s.map_link} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} 지도 열기`}>
+                  <a
+                    href={s.map_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${s.name} 지도 열기`}
+                  >
                     <img
                       src={s.image}
                       alt={s.imageAlt ?? `${s.name} 사진`}
@@ -785,6 +817,26 @@ function Locations() {
               </Card>
             ))}
           </motion.div>
+
+          {/* 좌/우 버튼 */}
+          <Button
+            size="icon"
+            variant="outline"
+            className="absolute top-1/2 -translate-y-1/2 left-2 z-10 rounded-full"
+            onClick={prev}
+            aria-label="이전 지점"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+          <Button
+            size="icon"
+            variant="outline"
+            className="absolute top-1/2 -translate-y-1/2 right-2 z-10 rounded-full"
+            onClick={next}
+            aria-label="다음 지점"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
         </div>
       </div>
     </Section>
