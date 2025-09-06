@@ -227,9 +227,9 @@ const content = {
   // 매장/지점(전화/지도링크)
   locations: {
     stores: [
-      { name: "웰컴워시 송도점", phone: "0507-1313-0853", map_link: "https://naver.me/xq3dSvgy", image: "/stores/송도점.jpg"},
-      { name: "웰컴워시 운남점", phone: "0507-1347-3497", map_link: "https://naver.me/FtGgKl3M", image: "/stores/운남점.jpg"},
-      { name: "싸이칸워시 청학점", phone: "0507-1411-2010", map_link: "https://naver.me/xIeANgBZ", image: "/stores/청학점.jpg"},
+      { name: "웰컴워시 송도점", phone: "0507-1313-0853", map_link: "https://naver.me/xq3dSvgy", image: "/stores/송도점.jpg", ImageAlt: "송도점전경"},
+      { name: "웰컴워시 운남점", phone: "0507-1347-3497", map_link: "https://naver.me/FtGgKl3M", image: "/stores/운남점.jpg", ImageAlt: "운남점전경"},
+      { name: "싸이칸워시 청학점", phone: "0507-1411-2010", map_link: "https://naver.me/xIeANgBZ", image: "/stores/청학점.jpg", ImageAlt: "청학점전경"},
     ],
   },
 
