@@ -43,6 +43,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
+import Image from "next/image";
+
 import { useMotionValue, useTransform, useAnimationFrame, wrap } from "framer-motion";
 import {ChevronLeft, ChevronRight } from "lucide-react";
 
