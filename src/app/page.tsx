@@ -130,9 +130,9 @@ const content = {
 
   // 히어로(메인 배너)
   home: {
-    hero_title: "스마트 셀프 세차 가맹사업 (수정)", // 메인 카피
+    hero_title: "WELCOME WASH", // 메인 카피
     hero_subtitle:
-      "무인·저인건비·고회전 모델로 지역 상권을 선점하세요. 설치부터 운영까지 본사 풀케어 지원. (수정)", // 서브 카피
+      "무인·저인건비·고회전 모델로 지역 상권을 선점하세요. 설치부터 운영까지 본사 풀케어 지원.", // 서브 카피
     hero_image: "메인 키비주얼 (수정)", // 실제 이미지 적용 시 <img>로 교체 권장
     primary_cta: "브랜드 소개",
     secondary_cta: "창업 문의",
@@ -164,27 +164,83 @@ const content = {
   },
 
   // 세차 시스템(= 참조사이트의 Single Menu 성격)
-  wash_system: {
-    intro_title: "세차 시스템 소개 (수정)",
-    intro_copy: "셀프·터치리스·코팅 부스 구성과 결제/정산 시스템까지 원스톱 제공 (수정)",
-    gallery: ["세차 부스 이미지 (수정)", "고압세척기 (수정)", "터치리스 노즐 (수정)"],
-    performance: {
-      headline: "운영 성과/지표(예시) (수정)",
-      points: [
-        "부스 4~6기 구성(예시) (수정)",
-        "무인 결제 평균 회전율(예시) (수정)",
-        "평균 객단가/피크타임(예시) (수정)",
-        "선불기·정산·원격 모니터링 여부 (수정)",
-        "직영점/가맹점 간단 성과 지표 (수정)",
-      ],
-      disclaimer: "※ 표기된 수치·성과는 예시이며, 실제 데이터로 교체 필요",
-    },
-    features: [
-      { icon: Droplets, title: "고압세척/폼랜스", body: "차종별 최적 분사압과 세제 레시피 제공 (수정)" },
-      { icon: Sparkles, title: "셀프 코팅", body: "건식/습식 코팅 프로그램 지원 (수정)" },
-      { icon: Wrench, title: "원격 관제", body: "장비 상태/매출/장애 알림 실시간 확인 (수정)" },
+wash_system: {
+  // ── 터널식 타입(카탈로그 기반) ─────────────────────────────
+  tunnel: {
+    title: "터널식 타입",
+    subtitle: "극강의 프리미엄 노브러쉬 세차기 · 최첨단 터널식 세차 시스템",
+    // public/ 에 이미지 파일(wash01.png~05.png)을 넣어주세요.
+    heroImage: "/washsystem/tunnel/wash01.png",
+
+    // 요구하신 4가지 특징
+    highlights: [
+      {
+        title: "빠른 세차 속도",
+        bullets: ["1분 30초 세차 완성", "시간당 40대 소화 가능"],
+      },
+      {
+        title: "올인원 세차 시스템",
+        bullets: ["프리워시 / 휠 / 스노우폼 / 발수코팅 완벽 소화"],
+      },
+      {
+        title: "첨단 세정 기술",
+        bullets: ["스윙 제트 방식", "초고압수"],
+      },
+      {
+        title: "완벽한 건조 시스템",
+        bullets: ["스윙 방식의 터보건조"],
+      },
     ],
+
+    // 차량 한계치(카탈로그 표기)
+    vehicleLimits: [
+      { label: "최대 세차 높이", value: "2.6 m" },
+      { label: "최대 세차 길이", value: "제한 없음" },
+      { label: "최대 세차 폭", value: "2.2 m" },
+    ],
+
+    // "터널식 타입 상세" (차별화 포인트 + 4개 이미지)
+    detail: {
+      points: [
+        {
+          label: "신속함",
+          body:
+            "1분 30초 올인원 프리미엄 세차로 시간당 최대 40대 처리 가능. 대량 차량 처리와 고객 만족을 동시에 달성합니다.",
+        },
+        {
+          label: "진보함",
+          body:
+            "스윙 제트 초고압수로 부위별 맞춤 세정, 소재에 따른 압력 조절 가능. 최신 세차 기술의 집약체입니다.",
+        },
+        {
+          label: "안전함",
+          body:
+            "4륜 컨베이어 벨트, 이탈리아/독일제 최고급 센서, 이중 안전 시스템으로 차량과 고객을 철저히 보호합니다.",
+        },
+      ],
+      images: [
+        { src: "/washsystem/tunnel/wash02.png", label: "CAD도면" },
+        { src: "/washsystem/tunnel/wash03.png", label: "스윙 터보 시스템" },
+        { src: "/washsystem/tunnel/wash04.png", label: "4륜 컨베이어 벨트" },
+        { src: "/washsystem/tunnel/wash05.png", label: "이탈리아/독일제 근접센서" },
+      ],
+    },
+
+    // "기술사양 / 상세 내용" 표(카탈로그 v1.1)
+    specs: [
+      { key: "설비 제원", value: "길이×너비×높이 = 7,600 × 3,700 × 3,000 mm" },
+      { key: "설치 제원", value: "길이×너비×높이 = 10,000 × 4,200 × 3,200 mm" },
+      { key: "전기 사양", value: "380V / 60Hz (3상), 최대 운행 출력 80 kW" },
+      // 카탈로그 표기상 50대/시간이 있으므로 병기 안내는 컴포넌트 하단 주석으로 처리
+      { key: "세차 속도", value: "90초/대, 연속 50대/시간" },
+      { key: "물 소비", value: "240–300 L/대" },
+      { key: "전력 사용량", value: "1.2–1.5 kWh/대" },
+      { key: "차량 한계", value: "높이 2.6 m, 폭 2.2 m, 길이 제한 없음" },
+    ],
+    note:
+      "카탈로그 v1.1 기준 수치. 90초/대는 이론상 약 40대/시간과 동일하며, 카탈로그에는 '연속 50대/시간' 표기도 존재합니다.",
   },
+},
 
   // 가맹 안내(혜택/절차/표준 개설 내역서)
   franchise: {
@@ -520,53 +576,142 @@ function Brand() {
    - 성능/지표/갤러리/특장점 타일
    ========================================================= */
 function WashSystem() {
-  const { intro_title, intro_copy, gallery, performance, features } = content.wash_system;
+  const t = content.wash_system.tunnel;
+
   return (
     <Section id="wash">
       <div className="mx-auto max-w-6xl px-4">
+        {/* 섹션 헤더 */}
         <div className="mb-8 flex items-center gap-3">
           <ImageIcon className="h-5 w-5" />
-          <h2 className="text-2xl font-semibold">세차 시스템</h2>
-          <Tag>장비/프로그램/결제/관제 (수정)</Tag>
+          <h2 className="text-2xl font-semibold">세차 시스템 · 터널식 타입</h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* 소개 + 성능 지표 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>{intro_title}</CardTitle>
-              <CardDescription>{intro_copy}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc pl-5 text-sm text-muted-foreground">
-                {performance.points.map((p, i) => (
-                  <li key={i}>{p}</li>
+        {/* 메인 소개 + 히어로 이미지 + 4가지 특징 */}
+        <Card>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="p-6">
+              <h3 className="text-xl font-semibold">{t.title}</h3>
+              <p className="mt-1 text-muted-foreground">{t.subtitle}</p>
+
+              {/* 4가지 핵심 특징 */}
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                {t.highlights.map((h, i) => (
+                  <div key={i} className="rounded-xl border p-4">
+                    <div className="font-medium">{h.title}</div>
+                    <ul className="mt-2 list-disc pl-5 text-sm text-muted-foreground">
+                      {h.bullets.map((b, bi) => (
+                        <li key={bi}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
-              <p className="mt-3 text-xs text-muted-foreground">{performance.disclaimer}</p>
-            </CardContent>
-          </Card>
+              </div>
 
-          {/* 갤러리(플레이스홀더) */}
-          <div className="grid grid-cols-3 gap-4">
-            {gallery.map((g, i) => (
-              <PlaceholderImage key={i} label={g} />
-            ))}
+              {/* 차량 한계치(칩) */}
+              <div className="mt-5 flex flex-wrap gap-2">
+                {t.vehicleLimits.map((m, i) => (
+                  <span
+                    key={i}
+                    className="inline-flex items-center rounded-full border px-3 py-1 text-xs text-muted-foreground"
+                    aria-label={`${m.label} ${m.value}`}
+                  >
+                    {m.label}: <span className="ml-1 font-medium text-foreground">{m.value}</span>
+                  </span>
+                ))}
+              </div>
+              {/* 출처 표기(카탈로그 기반) */}
+              <p className="mt-3 text-[11px] text-muted-foreground">
+                ※ 사양 및 치수는 카탈로그 v1.1 기준입니다.
+              </p>
+            </div>
+
+            {/* 히어로 이미지 */}
+          <div className="p-6 pt-0 md:p-6 md:pt-6">
+            <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]"> 
+              <Image
+                src={t.heroImage} // "/wash01.png"
+                alt="터널식 타입 메인 이미지"
+                fill
+                sizes="(min-width:1024px) 50vw, 100vw"
+                className="rounded-xl border object-cover"
+                priority
+              />
+            </div>
+           </div>
           </div>
-        </div>
+        </Card>
 
-        {/* 특장점 아이콘 타일 */}
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {features.map((f, idx) => (
-            <Card key={idx}>
-              <CardHeader className="flex flex-row items-center gap-3">
-                <f.icon className="h-5 w-5" />
-                <CardTitle className="text-base">{f.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">{f.body}</CardContent>
-            </Card>
-          ))}
-        </div>
+        {/* 상세: 차별화 3포인트 + 4개 이미지 */}
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>터널식 타입 상세</CardTitle>
+            <CardDescription>차별화 포인트 및 기술 사양</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {/* 3포인트 */}
+            <div className="grid gap-4 md:grid-cols-3">
+              {t.detail.points.map((p, i) => (
+                <div key={i} className="rounded-xl border p-4">
+                  <div className="text-sm font-semibold">{p.label}</div>
+                  <p className="mt-2 text-sm text-muted-foreground">{p.body}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 4개 이미지 */}
+            <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+              {t.detail.images.map((img, i) => (
+                <div key={i} className="relative">
+                  <Image
+                    src={img.src}
+                    alt={img.label}
+                    width={800}
+                    height={600}
+                    className="aspect-[4/3] w-full rounded-xl border object-cover"
+                  />
+                  <span className="absolute right-2 top-2 rounded-full bg-background/80 px-2 py-1 text-[11px]">
+                    {img.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 기술 사양 / 상세 내용 표 */}
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>기술사양 / 상세 내용</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <colgroup>
+                  <col className="w-[160px]" />
+                  <col />
+                </colgroup>
+                <thead>
+                  <tr className="text-left">
+                    <th className="py-2 pr-4">항목</th>
+                    <th className="py-2 pr-4">사양</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.specs.map((row, i) => (
+                    <tr key={i} className="border-t">
+                      <td className="py-2 pr-4 font-medium">{row.key}</td>
+                      <td className="py-2 pr-4 text-muted-foreground">{row.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              * 90초/대는 이론상 약 40대/시간과 동일합니다(카탈로그에는 ‘연속 50대/시간’ 표기도 병기). 운영 환경에 따라 변동될 수 있습니다.
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </Section>
   );
