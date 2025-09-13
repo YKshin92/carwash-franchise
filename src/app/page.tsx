@@ -171,7 +171,7 @@ wash_system: {
     subtitle: "극강의 프리미엄 노브러쉬 세차기 · 최첨단 터널식 세차 시스템",
     // public/ 에 이미지 파일(wash01.png~05.png)을 넣어주세요.
     heroImage: "/washsystem/tunnel/wash01.png",
-
+    priceKRW: "₩251,400,000 (부가세 별도)",
     // 요구하신 4가지 특징
     highlights: [
       {
@@ -733,66 +733,75 @@ function Brand() {
    7) 세차 시스템(= Single Menu 유사) 섹션
    - 성능/지표/갤러리/특장점 타일
    ========================================================= */
+
 function WashSystem() {
-  const t = content.wash_system.tunnel; // 기존 터널식 타입(이미 반영된 데이터)
+  const t = content.wash_system.tunnel;
   const s = content.wash_system.sky;
   const x = content.wash_system.x360;
 
   return (
     <Section id="products">
       <div className="mx-auto max-w-6xl px-4">
-        {/* 섹션 헤더 */}
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <ImageIcon className="h-5 w-5" />
-          <h2 className="text-2xl font-semibold">주요 제품</h2>
-          <Tag>터널식 / SKY / 360</Tag>
+
+        {/* ===== 섹션 헤더 + 앵커 내비 (중앙 정렬) ===== */}
+        <div className="mb-6 text-center">
+          <div className="mb-3 flex items-center justify-center gap-3">
+            <ImageIcon className="h-5 w-5" />
+            <h2 className="text-2xl font-semibold">주요 제품</h2>
+          </div>
+
+          {/* 중앙 정렬 앵커 내비: 활성 항목은 짙은 파란색(글자 흰색) */}
+          <div id="product-nav" className="flex flex-wrap justify-center gap-2">
+            <a href="#product-tunnel" className="rounded-full border px-3 py-1 text-sm hover:bg-muted">
+              터널식 타입
+            </a>
+            <a href="#product-sky" className="rounded-full border px-3 py-1 text-sm hover:bg-muted">
+              SKY 타입
+            </a>
+            <a href="#product-x360" className="rounded-full border px-3 py-1 text-sm hover:bg-muted">
+              360 타입
+            </a>
+          </div>
         </div>
 
-        {/* 하위 카테고리(앵커 내비) */}
-        <div className="mb-6 flex flex-wrap gap-2">
-          <a href="#product-tunnel" className="rounded-full border px-3 py-1 text-sm hover:bg-muted">
-            터널식 타입
-          </a>
-          <a href="#product-sky" className="rounded-full border px-3 py-1 text-sm hover:bg-muted">
-            SKY 타입
-          </a>
-          <a href="#product-x360" className="rounded-full border px-3 py-1 text-sm hover:bg-muted">
-            360 타입
-          </a>
+        {/* ===== 타입 카드: 한 번에 하나만 노출 =====
+            기본: 터널식 보이기, #product-sky 또는 #product-x360 해시가 잡히면 해당 타입만 보이도록 CSS 제어 */}
+        <div id="product-tunnel" className="panel scroll-mt-28">
+          <ProductPanelVertical data={t} />
         </div>
-
-        {/* 1) 터널식 타입 */}
-        <ProductPanel id="product-tunnel" data={t} />
-
-        {/* 2) SKY 타입 */}
-        <ProductPanel id="product-sky" data={s} />
-
-        {/* 3) 360 타입 */}
-        <ProductPanel id="product-x360" data={x} />
+        <div id="product-sky" className="panel scroll-mt-28">
+          <ProductPanelVertical data={s} />
+        </div>
+        <div id="product-x360" className="panel scroll-mt-28">
+          <ProductPanelVertical data={x} />
+        </div>
       </div>
     </Section>
   );
 }
 
-/** 공통 패널 */
-function ProductPanel({
-  id,
+/** 수직 레이아웃 카드 (요청 순서/중앙 정렬 반영)
+ *  1) 타이틀
+ *  2) 서브타이틀(설명 카피)
+ *  3) 이미지
+ *  4) 4개 특징 카드 (한 행, md 이상 4열)
+ *  5) 3개 차량 한계치(칩)
+ */
+function ProductPanelVertical({
   data,
 }: {
-  id: string;
   data: {
     title: string;
-    subtitle?: string;
-    tagline?: string;
+    subtitle?: string;      // "극강의 프리미엄 노브러쉬..." 등
+    tagline?: string;       // 필요 시 사용
     priceKRW?: string;
     heroImage?: string;
     highlights: { title: string; bullets?: string[] }[];
     vehicleLimits?: { label: string; value: string }[];
     detail?: {
       title?: string;
-      // 둘 중 하나만 있어도 렌더됨
-      points?: { label: string; body: string }[];
       blocks?: { title: string; bullets: string[] }[];
+      points?: { label: string; body: string }[];
       images?: { src: string; label: string }[];
     };
     specs?: { key: string; value: string }[];
@@ -800,61 +809,30 @@ function ProductPanel({
   };
 }) {
   return (
-    <div id={id} className="scroll-mt-20">
+    <>
+      {/* 메인 카드: 수직 배치/중앙 정렬 */}
       <Card className="mb-6">
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* 좌: 텍스트 */}
-          <div className="p-6">
-            <div className="flex items-center gap-2">
-              <h3 className="text-xl font-semibold">{data.title}</h3>
-              {data.tagline ? <Tag>{data.tagline}</Tag> : null}
-            </div>
-            {data.subtitle ? <p className="mt-1 text-muted-foreground">{data.subtitle}</p> : null}
-            {data.priceKRW ? (
-              <p className="mt-2 text-lg font-medium">{data.priceKRW}</p>
+        <div className="p-6">
+          {/* 1) 타이틀 */}
+          <div className="text-center">
+            <h3 className="text-xl font-semibold">{data.title}</h3>
+            {/* 2) 서브타이틀 */}
+            {data.subtitle ? (
+              <p className="mt-1 text-muted-foreground">{data.subtitle}</p>
             ) : null}
-
-            {/* 핵심 특징 */}
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {data.highlights.map((h, i) => (
-                <div key={i} className="rounded-xl border p-4">
-                  <div className="font-medium">{h.title}</div>
-                  {h.bullets?.length ? (
-                    <ul className="mt-2 list-disc pl-5 text-sm text-muted-foreground">
-                      {h.bullets.map((b, bi) => (
-                        <li key={bi}>{b}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-
-            {/* 차량 한계치 */}
-            {data.vehicleLimits?.length ? (
-              <div className="mt-5 flex flex-wrap gap-2">
-                {data.vehicleLimits.map((m, i) => (
-                  <span
-                    key={i}
-                    className="inline-flex items-center rounded-full border px-3 py-1 text-xs text-muted-foreground"
-                    aria-label={`${m.label} ${m.value}`}
-                  >
-                    {m.label}: <span className="ml-1 font-medium text-foreground">{m.value}</span>
-                  </span>
-                ))}
-              </div>
-            ) : null}
+            {/* (선택) 가격/태그라인 */}
+            {data.priceKRW ? <p className="mt-1 text-base font-medium">{data.priceKRW}</p> : null}
           </div>
 
-          {/* 우: 히어로 이미지 (모바일 자연스러운 비율) */}
-          <div className="p-6 pt-0 md:p-6 md:pt-6">
-            <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10]">
+          {/* 3) 이미지 (중앙, 반응형 비율) */}
+          <div className="mt-6">
+            <div className="relative mx-auto w-full max-w-4xl lg:max-w-xl aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10]">
               {data.heroImage ? (
                 <Image
                   src={data.heroImage}
                   alt={`${data.title} 메인 이미지`}
                   fill
-                  sizes="(min-width:1024px) 50vw, (min-width:768px) 50vw, 100vw"
+                  sizes="(min-width:1024px) 576px, (min-width:768px) 60vw, 80vw"
                   className="rounded-xl border object-cover"
                   priority
                 />
@@ -865,24 +843,57 @@ function ProductPanel({
               )}
             </div>
           </div>
+
+          {/* 4) 4개 특징 카드 (한 행, 중앙 정렬) */}
+          {data.highlights?.length ? (
+            <div className="mt-6 grid gap-4 md:grid-cols-4">
+              {data.highlights.map((h, i) => (
+                <div key={i} className="rounded-xl border p-4 text-center">
+                  <div className="font-medium"><strong>{h.title}</strong></div>
+                  {h.bullets?.length ? (
+                    <ul className="mt-2 text-left space-y-1 text-sm text-muted-foreground">
+                      {h.bullets.map((b, bi) => (
+                        <li key={bi}>{b}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {/* 5) 차량 한계치(칩) - 중앙 정렬 */}
+          {data.vehicleLimits?.length ? (
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+              {data.vehicleLimits.map((m, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center rounded-full border px-3 py-1 text-xs text-muted-foreground"
+                  aria-label={`${m.label} ${m.value}`}
+                >
+                  {m.label}: <span className="ml-1 font-medium text-foreground">{m.value}</span>
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
       </Card>
 
-      {/* 상세 블록 */}
+      {/* 상세(중앙 정렬) */}
       {data.detail ? (
         <Card className="mb-6">
-          <CardHeader>
+          <CardHeader className="text-center">
             <CardTitle>{data.detail.title ?? `${data.title} 상세`}</CardTitle>
-            <CardDescription>특징 및 사양</CardDescription>
+            <CardDescription>기술적 특징 및 사양</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* points (라벨+문단) 또는 blocks(제목+불릿) 모두 지원 */}
+            {/* blocks (제목+불릿) */}
             {data.detail.blocks?.length ? (
-              <div className="grid gap-4 md:grid-cols-3">
+              <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
                 {data.detail.blocks.map((blk, i) => (
                   <div key={i} className="rounded-xl border p-4">
-                    <div className="text-sm font-semibold">{blk.title}</div>
-                    <ul className="mt-2 list-disc pl-5 text-sm text-muted-foreground">
+                    <div className="text-sm font-semibold text-center">{blk.title}</div>
+                    <ul className="mt-2 list-disc list-inside text-sm text-muted-foreground">
                       {blk.bullets.map((b, bi) => (
                         <li key={bi}>{b}</li>
                       ))}
@@ -892,10 +903,11 @@ function ProductPanel({
               </div>
             ) : null}
 
+            {/* points (라벨+문단) */}
             {data.detail.points?.length ? (
-              <div className="grid gap-4 md:grid-cols-3">
+              <div className="mx-auto mt-4 grid max-w-5xl gap-4 md:grid-cols-3">
                 {data.detail.points.map((p, i) => (
-                  <div key={i} className="rounded-xl border p-4">
+                  <div key={i} className="rounded-xl border p-4 text-center">
                     <div className="text-sm font-semibold">{p.label}</div>
                     <p className="mt-2 text-sm text-muted-foreground">{p.body}</p>
                   </div>
@@ -903,18 +915,19 @@ function ProductPanel({
               </div>
             ) : null}
 
+            {/* 상세 이미지 (레이블: 하단 중앙, 진한 파랑 반투명 배경 + 흰색 텍스트) */}
             {data.detail.images?.length ? (
-              <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+              <div className="mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-4 md:grid-cols-4">
                 {data.detail.images.map((img, i) => (
-                  <div key={i} className="relative">
+                  <div key={i} className="relative overflow-hidden rounded-xl border">
                     <Image
                       src={img.src}
                       alt={img.label}
                       width={800}
                       height={600}
-                      className="aspect-[4/3] w-full rounded-xl border object-cover"
+                      className="aspect-[4/3] w-full object-cover"
                     />
-                    <span className="absolute right-2 top-2 rounded-full bg-background/80 px-2 py-1 text-[11px]">
+                    <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-blue-900/85 px-2 py-1 text-center text-[11px] font-medium text-white">
                       {img.label}
                     </span>
                   </div>
@@ -925,20 +938,23 @@ function ProductPanel({
         </Card>
       ) : null}
 
-      {/* 기술 사양 표 */}
+      {/* (선택) 기술 사양 표는 기존 로직 유지 — 중앙 정렬 헤더 */}
       {data.specs?.length ? (
         <Card className="mb-12">
+          <CardHeader className="text-center">
+            <CardTitle>기술사양 / 상세 내용</CardTitle>
+          </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="mx-auto w-full max-w-5xl text-sm">
                 <colgroup>
                   <col className="w-[160px]" />
                   <col />
                 </colgroup>
                 <thead>
                   <tr className="text-left">
-                    <th className="py-2 pr-4">기술 사양</th>
-                    <th className="py-2 pr-4">상세 내용</th>
+                    <th className="py-2 pr-4">항목</th>
+                    <th className="py-2 pr-4">사양</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -952,15 +968,14 @@ function ProductPanel({
               </table>
             </div>
             {data.note ? (
-              <p className="mt-2 text-[11px] text-muted-foreground">{data.note}</p>
+              <p className="mt-2 text-center text-[11px] text-muted-foreground">{data.note}</p>
             ) : null}
           </CardContent>
         </Card>
       ) : null}
-    </div>
+    </>
   );
 }
-
 /* =========================================================
    8) 가맹 안내
    - 혜택/창업 절차/표준 개설 내역서 테이블

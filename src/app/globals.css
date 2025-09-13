@@ -126,3 +126,32 @@
 }
 
 html { scroll-behavior: smooth; }
+
+/* src/app/globals.css 혹은 전역 CSS에 추가 */
+@layer components {
+  /* 기본: 터널식 보이기, 다른 타입 숨김 */
+  #product-tunnel { display: block; }
+  #product-sky, #product-x360 { display: none; }
+
+  /* 해시가 SKY일 때: SKY만 표시 */
+  :root:has(#product-sky:target) #product-tunnel { display: none; }
+  :root:has(#product-sky:target) #product-sky { display: block; }
+
+  /* 해시가 360일 때: 360만 표시 */
+  :root:has(#product-x360:target) #product-tunnel { display: none; }
+  :root:has(#product-x360:target) #product-x360 { display: block; }
+
+  /* ===== 앵커 내비 활성 상태(짙은 파랑 배경 + 흰색 글자) ===== */
+  /* 기본(해시 없음) → 터널식 활성 */
+  body:not(:has(#product-sky:target)):not(:has(#product-x360:target))
+    #product-nav a[href="#product-tunnel"] {
+    @apply bg-blue-900 text-white border-blue-900;
+  }
+
+  /* 해시가 터널/ SKY / 360일 때 각 버튼 활성 */
+  body:has(#product-tunnel:target) #product-nav a[href="#product-tunnel"],
+  body:has(#product-sky:target)    #product-nav a[href="#product-sky"],
+  body:has(#product-x360:target)   #product-nav a[href="#product-x360"] {
+    @apply bg-blue-900 text-white border-blue-900;
+  }
+}
