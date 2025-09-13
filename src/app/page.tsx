@@ -328,7 +328,7 @@ wash_system: {
       subtitle: "노브러쉬의 정석",
       tagline: "프리미엄 360도 세차 솔루션",
       priceKRW: "₩25,000,000 (부가세 별도)",
-      heroImage: "/x36001.png", // public/x36001.png 준비 권장
+      heroImage: "/washsystem/360/wash01.png", // public/x36001.png 준비 권장
 
       highlights: [
         {
