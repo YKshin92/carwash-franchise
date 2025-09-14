@@ -168,9 +168,10 @@ wash_system: {
   // ── 터널식 타입(카탈로그 기반) ─────────────────────────────
   tunnel: {
     title: "터널식 타입",
-    subtitle: "극강의 프리미엄 노브러쉬 세차기 · 최첨단 터널식 세차 시스템",
+    subtitle: "극강의 프리미엄 노브러쉬 세차기",
     // public/ 에 이미지 파일(wash01.png~05.png)을 넣어주세요.
     heroImage: "/washsystem/tunnel/wash01.png",
+    heroLabel: "최첨단 터널식 세차 시스템",   // 👈 추가
     priceKRW: "₩251,400,000 (부가세 별도)",
     // 요구하신 4가지 특징
     highlights: [
@@ -248,6 +249,7 @@ wash_system: {
       tagline: "프리미엄 노브러쉬 세차 시스템",
       priceKRW: "₩50,000,000 (부가세 별도)",
       heroImage: "/washsystem/sky/wash01.png", // public/sky01.png 준비 권장
+      heroLabel: "프리미엄 노브러쉬 세차 시스템",   // 👈 추가
 
       highlights: [
         {
@@ -329,7 +331,7 @@ wash_system: {
       tagline: "프리미엄 360도 세차 솔루션",
       priceKRW: "₩25,000,000 (부가세 별도)",
       heroImage: "/washsystem/360/wash01.png", // public/x36001.png 준비 권장
-
+      heroLabel: "프리미엄 360도 세차 솔루션",   // 👈 추가
       highlights: [
         {
           title: "360도 사각 분사",
@@ -796,6 +798,7 @@ function ProductPanelVertical({
     tagline?: string;       // 필요 시 사용
     priceKRW?: string;
     heroImage?: string;
+    heroLabel?: string;            // 👈 추가
     highlights: { title: string; bullets?: string[] }[];
     vehicleLimits?: { label: string; value: string }[];
     detail?: {
@@ -833,7 +836,7 @@ function ProductPanelVertical({
                   alt={`${data.title} 메인 이미지`}
                   fill
                   sizes="(min-width:1024px) 576px, (min-width:768px) 60vw, 80vw"
-                  className="rounded-xl border object-cover"
+                  className="object-cover"
                   priority
                 />
               ) : (
@@ -841,6 +844,12 @@ function ProductPanelVertical({
                   이미지 준비중
                 </div>
               )}
+              {/* ✅ 신규: 히어로 라벨 오버레이(상세 이미지와 동일 톤) */}
+              {data.heroLabel ? (
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-blue-900/85 px-2 py-1 text-center text-[11px] font-medium text-white">
+                  {data.heroLabel}
+                </span>
+              ) : null}
             </div>
           </div>
 
@@ -851,7 +860,7 @@ function ProductPanelVertical({
                 <div key={i} className="rounded-xl border p-4 text-center">
                   <div className="font-medium"><strong>{h.title}</strong></div>
                   {h.bullets?.length ? (
-                    <ul className="mt-2 text-left space-y-1 text-sm text-muted-foreground">
+                    <ul className="mt-2 text-center space-y-1 text-sm text-muted-foreground">
                       {h.bullets.map((b, bi) => (
                         <li key={bi}>{b}</li>
                       ))}
